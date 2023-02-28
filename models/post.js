@@ -1,47 +1,47 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Book extends Model {}
+class Post extends Model {}
 
-Book.init(
+Post.init(
   {
-    id: {
+    post_Id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    title: {
+    post_Title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    author: {
-      type: DataTypes.STRING,
+    post_Content: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
-    isbn: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    pages: {
+    user_Id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    edition: {
-      type: DataTypes.INTEGER,
-      defaultValue: 1
-    },
-    is_paperback: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true
-    },
-    // Store a reference of the `id` of the `Reader` that owns this Book
-    reader_id: {
-      type: DataTypes.INTEGER,
       references: {
-        model: 'reader',
+        model: 'user',
         key: 'id',
       },
+    },
+    user_Name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'user_Name',
+      },
+    },
+    created_At: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_At: {
+      type: DataTypes.DATE,
+      defaultValue: null,
     },
   },
   {
@@ -49,8 +49,8 @@ Book.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'book'
+    modelName: 'post',
   }
 );
 
-module.exports = Book;
+module.exports = Post;
